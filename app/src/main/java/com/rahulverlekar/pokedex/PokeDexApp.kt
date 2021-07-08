@@ -5,7 +5,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 
 @HiltAndroidApp
-class PokeDexApplication: Application() {
+class PokeDexApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
