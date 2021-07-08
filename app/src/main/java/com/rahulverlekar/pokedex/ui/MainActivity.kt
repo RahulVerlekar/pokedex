@@ -1,6 +1,7 @@
-package com.rahulverlekar.pokedex
+package com.rahulverlekar.pokedex.ui
 
 import androidx.activity.viewModels
+import com.rahulverlekar.pokedex.R
 import com.rahulverlekar.pokedex.base.BaseActivity
 import com.rahulverlekar.pokedex.base.BaseViewModel
 import com.rahulverlekar.pokedex.databinding.ActivityMainBinding
