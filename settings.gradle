@@ -1,0 +1,4 @@
+rootProject.name = "PokeDex"
+include ':app'
+include ':domain'
+include ':data'
