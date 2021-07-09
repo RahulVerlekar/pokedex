@@ -27,6 +27,10 @@ class PokeDexNetworkRepo @Inject constructor(
         client.build().create(PokeDexApi::class.java)
     }
 
+    override suspend fun addPokemon(vararg pokemon: Pokemon) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
         return api.getAllPokemon(offset, limit).results?.map { it.name } ?: emptyList()
     }

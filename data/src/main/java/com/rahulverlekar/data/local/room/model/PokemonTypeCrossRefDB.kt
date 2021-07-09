@@ -5,5 +5,5 @@ import androidx.room.Entity
 @Entity(primaryKeys = ["pokemonId", "typeId"])
 data class PokemonTypeCrossRefDB(
     var pokemonId: Int,
-    var typeId: String
+    var typeId: Int
 )

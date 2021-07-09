@@ -8,6 +8,8 @@ import javax.inject.Inject
 
 interface PokeDexUseCases {
 
+    suspend fun addPokemon(vararg pokemon: Pokemon)
+
     suspend fun getPokemonNames(offset: Int, limit: Int = 20): List<String>
 
     suspend fun getPokemon(name: String): Pokemon
@@ -17,7 +19,8 @@ interface PokeDexUseCases {
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCases): PokeDexUseCases{
+class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCases, private val local: PokeDexUseCases): PokeDexUseCases{
+
 
     override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
         return remote.getPokemonNames(offset, limit)
@@ -28,11 +31,17 @@ class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCase
     }
 
     override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
-        val names = remote.getPokemonNames(offset, limit)
+       /* val names = remote.getPokemonNames(offset, limit)
         val pokemons = mutableListOf<Pokemon>()
         for (name in names) {
-            pokemons.add(remote.getPokemon(name))
+            val pokemon = remote.getPokemon(name)
+            pokemons.add(pokemon)
         }
-        return pokemons
+        local.addPokemon(*pokemons.toTypedArray())*/
+        return local.getPokemons(offset, limit)
+    }
+
+    override suspend fun addPokemon(vararg pokemon: Pokemon) {
+        TODO("Not yet implemented")
     }
 }
