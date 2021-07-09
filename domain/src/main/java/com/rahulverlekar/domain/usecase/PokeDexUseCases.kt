@@ -36,7 +36,7 @@ class PokeDexUseCasesImpl @Inject constructor(
     }
 
     override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
-        return if (offset + limit <= keyValueStorage.lastOffset + limit) {
+        return if (offset + limit > keyValueStorage.lastOffset + limit) {
             val names = remote.getPokemonNames(offset, limit)
             val pokemons = mutableListOf<Pokemon>()
             for (name in names) {
