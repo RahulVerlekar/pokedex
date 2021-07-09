@@ -9,7 +9,7 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseCases): BaseViewModel() {
     init {
         launch {
-            val data = useCases.getAllPokemon()
+            val data = useCases.getPokemonNames()
             println(data)
         }
     }

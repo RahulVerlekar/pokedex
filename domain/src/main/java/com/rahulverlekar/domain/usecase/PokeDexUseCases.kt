@@ -7,14 +7,14 @@ import javax.inject.Inject
 
 interface PokeDexUseCases {
 
-    suspend fun getAllPokemon(): String
+    suspend fun getPokemonNames(offset: Int, limit: Int = 20): List<String>
 }
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class PokeDexUseCasesImpl @Inject constructor(val remote: PokeDexUseCases): PokeDexUseCases{
+class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCases): PokeDexUseCases{
 
-    override suspend fun getAllPokemon(): String {
-        return remote.getAllPokemon()
+    override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
+        return remote.getPokemonNames(offset, limit)
     }
 }
