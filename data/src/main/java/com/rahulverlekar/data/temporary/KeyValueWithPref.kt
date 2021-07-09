@@ -24,4 +24,14 @@ class KeyValueWithPref @Inject constructor(@ApplicationContext val applicationCo
         get() = localStore.getString(TOKEN_KEY, null)
         set(value) = localStore.edit().putString(TOKEN_KEY, value).apply()
 
+    private val OFFSET = "offset"
+    override var offset: Int?
+        get() = localStore.getInt(OFFSET, 0)
+        set(value) = localStore.edit().putInt(OFFSET, value?:0).apply()
+
+    private val COUNT = "count"
+    override var count: Int?
+        get() = localStore.getInt(COUNT, 0)
+        set(value) = localStore.edit().putInt(COUNT, value?:0).apply()
+
 }

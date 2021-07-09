@@ -8,7 +8,7 @@ data class PokemonDetailResponse(
 	val locationAreaEncounters: String? = null,
 
 	@field:SerializedName("types")
-	val types: List<TypesItem?>? = null,
+	val types: List<TypesItem> = emptyList(),
 
 	@field:SerializedName("base_experience")
 	val baseExperience: Int? = null,
@@ -29,7 +29,7 @@ data class PokemonDetailResponse(
 	val sprites: Sprites? = null,
 
 	@field:SerializedName("abilities")
-	val abilities: List<AbilitiesItem?>? = null,
+	val abilities: List<AbilitiesItem> = emptyList(),
 
 	@field:SerializedName("game_indices")
 	val gameIndices: List<GameIndicesItem?>? = null,
@@ -41,13 +41,13 @@ data class PokemonDetailResponse(
 	val stats: List<StatsItem?>? = null,
 
 	@field:SerializedName("moves")
-	val moves: List<MovesItem?>? = null,
+	val moves: List<MovesItem> = emptyList(),
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Int,
 
 	@field:SerializedName("forms")
 	val forms: List<FormsItem?>? = null,
@@ -83,13 +83,13 @@ data class XY(
 	val frontShiny: String? = null
 )
 
-data class Ability(
+data class AbilityDTO(
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("url")
-	val url: String? = null
+	val url: String
 )
 
 data class DiamondPearl(
@@ -170,13 +170,13 @@ data class GenerationI(
 	val redBlue: RedBlue? = null
 )
 
-data class Type(
+data class TypeDTO(
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("url")
-	val url: String? = null
+	val url: String
 )
 
 data class HeartgoldSoulsilver(
@@ -296,13 +296,13 @@ data class GenerationIii(
 	val emerald: Emerald? = null
 )
 
-data class Move(
+data class MoveDTO(
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("url")
-	val url: String? = null
+	val url: String
 )
 
 data class FireredLeafgreen(
@@ -392,7 +392,7 @@ data class AbilitiesItem(
 	val isHidden: Boolean? = null,
 
 	@field:SerializedName("ability")
-	val ability: Ability? = null,
+	val abilityDTO: AbilityDTO,
 
 	@field:SerializedName("slot")
 	val slot: Int? = null
@@ -626,7 +626,7 @@ data class MovesItem(
 	val versionGroupDetails: List<VersionGroupDetailsItem?>? = null,
 
 	@field:SerializedName("move")
-	val move: Move? = null
+	val moveDTO: MoveDTO
 )
 
 data class TypesItem(
@@ -635,7 +635,7 @@ data class TypesItem(
 	val slot: Int? = null,
 
 	@field:SerializedName("type")
-	val type: Type? = null
+	val type: TypeDTO
 )
 
 data class Sprites(
