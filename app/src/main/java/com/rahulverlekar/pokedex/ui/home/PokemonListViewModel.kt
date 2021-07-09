@@ -7,9 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseCases, private val appDatabase: AppDatabase): BaseViewModel() {
+class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseCases): BaseViewModel() {
     init {
-        appDatabase
         launch {
             val data = useCases.getPokemons(0, 5)
             println(data)

@@ -1,5 +1,6 @@
 package com.rahulverlekar.domain.usecase
 
+import com.rahulverlekar.domain.KeyValueStorage
 import com.rahulverlekar.domain.model.Pokemon
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,7 +20,11 @@ interface PokeDexUseCases {
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCases, private val local: PokeDexUseCases): PokeDexUseCases{
+class PokeDexUseCasesImpl @Inject constructor(
+    private val remote: PokeDexUseCases,
+    private val local: PokeDexUseCases,
+    private val keyValueStorage: KeyValueStorage
+) : PokeDexUseCases {
 
 
     override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
@@ -31,17 +36,22 @@ class PokeDexUseCasesImpl @Inject constructor(private val remote: PokeDexUseCase
     }
 
     override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
-       /* val names = remote.getPokemonNames(offset, limit)
-        val pokemons = mutableListOf<Pokemon>()
-        for (name in names) {
-            val pokemon = remote.getPokemon(name)
-            pokemons.add(pokemon)
+        return if (offset + limit <= keyValueStorage.lastOffset + limit) {
+            val names = remote.getPokemonNames(offset, limit)
+            val pokemons = mutableListOf<Pokemon>()
+            for (name in names) {
+                val pokemon = remote.getPokemon(name)
+                pokemons.add(pokemon)
+            }
+            local.addPokemon(*pokemons.toTypedArray())
+            keyValueStorage.lastOffset = offset
+            pokemons
+        } else {
+            local.getPokemons(offset, limit)
         }
-        local.addPokemon(*pokemons.toTypedArray())*/
-        return local.getPokemons(offset, limit)
     }
 
     override suspend fun addPokemon(vararg pokemon: Pokemon) {
-        TODO("Not yet implemented")
+        return local.addPokemon(*pokemon)
     }
 }

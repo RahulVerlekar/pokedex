@@ -1,7 +1,7 @@
 package com.rahulverlekar.data.network.common
 
 import com.google.gson.GsonBuilder
-import com.rahulverlekar.data.temporary.KeyValueStorage
+import com.rahulverlekar.domain.KeyValueStorage
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent

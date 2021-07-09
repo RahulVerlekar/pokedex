@@ -2,6 +2,7 @@ package com.rahulverlekar.data.temporary
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.rahulverlekar.domain.KeyValueStorage
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
@@ -25,9 +26,9 @@ class KeyValueWithPref @Inject constructor(@ApplicationContext val applicationCo
         set(value) = localStore.edit().putString(TOKEN_KEY, value).apply()
 
     private val OFFSET = "offset"
-    override var offset: Int?
-        get() = localStore.getInt(OFFSET, 0)
-        set(value) = localStore.edit().putInt(OFFSET, value?:0).apply()
+    override var lastOffset: Int
+        get() = localStore.getInt(OFFSET, -1)
+        set(value) = localStore.edit().putInt(OFFSET, value).apply()
 
     private val COUNT = "count"
     override var count: Int?

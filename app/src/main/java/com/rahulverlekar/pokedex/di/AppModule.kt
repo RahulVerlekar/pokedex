@@ -2,7 +2,7 @@ package com.rahulverlekar.pokedex.di
 
 import android.content.Context
 import com.rahulverlekar.data.local.room.AppDatabase
-import com.rahulverlekar.data.temporary.KeyValueStorage
+import com.rahulverlekar.domain.KeyValueStorage
 import com.rahulverlekar.data.temporary.KeyValueWithPref
 import dagger.Module
 import dagger.Provides

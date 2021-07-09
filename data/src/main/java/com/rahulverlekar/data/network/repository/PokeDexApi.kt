@@ -5,7 +5,7 @@ import com.rahulverlekar.data.network.dto.PagedDTO
 import com.rahulverlekar.data.network.dto.PokemonDetailResponse
 import com.rahulverlekar.data.network.dto.PokemonNamedResourceDTO
 import com.rahulverlekar.data.network.mapper.toDomain
-import com.rahulverlekar.data.temporary.KeyValueStorage
+import com.rahulverlekar.domain.KeyValueStorage
 import com.rahulverlekar.domain.model.Pokemon
 import com.rahulverlekar.domain.usecase.PokeDexUseCases
 import dagger.Module
