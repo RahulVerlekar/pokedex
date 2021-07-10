@@ -4,4 +4,5 @@
     <dimen name="marginHalf">8dp</dimen>
     <dimen name="marginquarter">4dp</dimen>
     <dimen name="margindouble">32dp</dimen>
+    <dimen name="tabBgCorner">@dimen/margindouble</dimen>
 </resources>

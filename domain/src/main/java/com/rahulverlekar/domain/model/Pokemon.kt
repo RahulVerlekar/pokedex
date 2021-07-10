@@ -1,5 +1,7 @@
 package com.rahulverlekar.domain.model
 
+import java.io.Serializable
+
 interface NamedResource {
     val id: Int
     val name: String
@@ -12,19 +14,19 @@ data class Pokemon(
     val abilities: List<Ability>,
     val moves: List<Move>,
     val types: List<Type>
-    ): NamedResource
+    ): NamedResource, Serializable
 
 data class Ability(
     override val id: Int,
     override val name: String
-): NamedResource
+): NamedResource, Serializable
 
 data class Move(
     override val id: Int,
     override val name: String
-): NamedResource
+): NamedResource, Serializable
 
 data class Type(
     override val id: Int,
     override val name: String
-): NamedResource
+): NamedResource, Serializable
