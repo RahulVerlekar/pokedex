@@ -35,6 +35,7 @@ class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseC
 
     fun onRefresh() {
         launch {
+            pokemons.value = emptyList()
             val data = useCases.refreshList(0, limit, order.column)
             pokemons.value = data
             sendEvent(RefreshCompleteEvent())

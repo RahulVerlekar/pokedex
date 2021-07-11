@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:gravity="center"
-                android:text="Pokemon Name"
+                android:text="@{item.pokemon.description}"
                 android:textColor="@color/textColor"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"

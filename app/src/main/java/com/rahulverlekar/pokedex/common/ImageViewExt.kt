@@ -153,6 +153,14 @@ fun AppCompatImageView.loadGif(@RawRes glideGif: Int) {
         .into(this)
 }
 
+@BindingAdapter("gif")
+fun AppCompatImageView.loadGifStretch(@RawRes glideGif: Int) {
+    Glide.with(context)
+        .load(glideGif)
+        .centerCrop()
+        .into(this)
+}
+
 private fun createGlideRequest(
     context: Context,
     src: GlideUrl,

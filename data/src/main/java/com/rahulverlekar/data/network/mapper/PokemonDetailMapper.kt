@@ -8,6 +8,7 @@ import com.rahulverlekar.domain.model.Ability
 import com.rahulverlekar.domain.model.Move
 import com.rahulverlekar.domain.model.Pokemon
 import com.rahulverlekar.domain.model.Type
+import java.util.*
 
 private fun String.urlToId(): Int {
     return "/-?[0-9]+/$".toRegex().find(this)!!.value.filter { it.isDigit() || it == '-' }.toInt()
@@ -16,7 +17,8 @@ private fun String.urlToId(): Int {
 fun PokemonDetailResponse.toDomain(): Pokemon {
     return Pokemon(
         id,
-        name,
+        name.capitalizeWithLocale(),
+        "Intro for the pokemon $name will come over here.",
         sprites?.other?.officialArtwork?.frontDefault ?: "",
         abilities.map { it.abilityDTO.toDomain() },
         moves.map { it.moveDTO.toDomain() },
@@ -25,13 +27,17 @@ fun PokemonDetailResponse.toDomain(): Pokemon {
 }
 
 fun AbilityDTO.toDomain(): Ability {
-    return Ability(url.urlToId(), name)
+    return Ability(url.urlToId(), name.capitalizeWithLocale())
 }
 
 fun MoveDTO.toDomain(): Move {
-    return Move(url.urlToId(), name)
+    return Move(url.urlToId(), name.capitalizeWithLocale())
 }
 
 fun TypeDTO.toDomain(): Type {
     return Type(url.urlToId(), name)
+}
+
+fun String.capitalizeWithLocale() = this.replaceFirstChar {
+    if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
 }

@@ -10,6 +10,8 @@ data class PokemonDB(
     var id: Int,
     @ColumnInfo(name = "name")
     var name: String,
+    @ColumnInfo(name = "desc")
+    var desc: String,
     @ColumnInfo(name = "image")
     var image: String,
 )
@@ -49,7 +51,7 @@ data class PokemonAndData(
 )
 
 fun PokemonAndData.toDomain() = Pokemon(
-    pokemon.id, pokemon.name, pokemon.image,
+    pokemon.id, pokemon.name, pokemon.desc,pokemon.image,
     abilities.map { it.toDomain() },
     moves.map { it.toDomain() },
     types.map { it.toDomain() }
