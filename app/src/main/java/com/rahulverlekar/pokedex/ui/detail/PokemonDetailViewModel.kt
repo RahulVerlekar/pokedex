@@ -1,5 +1,6 @@
 package com.rahulverlekar.pokedex.ui.detail
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.MutableLiveData
 import com.rahulverlekar.domain.model.Pokemon
 import com.rahulverlekar.domain.usecase.PokeDexUseCases
@@ -12,10 +13,6 @@ class PokemonDetailViewModel @Inject constructor(private val useCases: PokeDexUs
     BaseViewModel() {
 
     val pokemon = MutableLiveData<Pokemon>()
-
-    init {
-
-    }
 
     fun onPokemonSelected(pokemon: Pokemon) {
         this.pokemon.value = pokemon

@@ -35,4 +35,9 @@ class KeyValueWithPref @Inject constructor(@ApplicationContext val applicationCo
         get() = localStore.getInt(COUNT, 0)
         set(value) = localStore.edit().putInt(COUNT, value?:0).apply()
 
+    override fun deleteAll() {
+        token = null
+        count = null
+        lastOffset = -1
+    }
 }

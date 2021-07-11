@@ -15,6 +15,9 @@ interface PokemonDao {
     @Delete
     suspend fun delete(vararg obj: PokemonDB)
 
+    @Query("DELETE FROM pokemon")
+    suspend fun delete()
+
     @Query("SELECT * FROM pokemon WHERE id = :id")
     suspend fun loadPokemon(id: Int): PokemonDB
 

@@ -4,20 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rahulverlekar.pokedex.ui.home.PokemonListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_pokemon_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <RelativeLayout
+            android:id="@+id/rl_load_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_loading"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/sl_pokemon_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/rl_load_more"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_pokemon_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

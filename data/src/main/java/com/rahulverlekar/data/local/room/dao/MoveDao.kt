@@ -14,6 +14,9 @@ interface MoveDao {
     @Delete
     suspend fun delete(vararg obj: MoveDB)
 
+    @Query("DELETE FROM move")
+    suspend fun delete()
+
     @Query("SELECT * FROM move WHERE id = :id")
     suspend fun load(id: Int): MoveDB
 

@@ -1,8 +1,10 @@
 package com.rahulverlekar.data.local.room.repository
 
 import com.rahulverlekar.data.local.room.AppDatabase
+import com.rahulverlekar.data.local.room.dao.*
 import com.rahulverlekar.data.local.room.model.*
 import com.rahulverlekar.domain.model.Pokemon
+import com.rahulverlekar.domain.usecase.PokeDexLocalUseCases
 import com.rahulverlekar.domain.usecase.PokeDexUseCases
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,7 +15,7 @@ import javax.inject.Inject
 @InstallIn(SingletonComponent::class)
 class PokeDexDB @Inject constructor(
     private val database: AppDatabase
-) : PokeDexUseCases {
+) : PokeDexLocalUseCases {
 
     override suspend fun addPokemon(vararg objects: Pokemon) {
         val pokemons = objects.map { PokemonDB(it.id, it.name, it.image) }
@@ -50,15 +52,23 @@ class PokeDexDB @Inject constructor(
         database.moveCross().insert(*movesCross.toTypedArray())
     }
 
-    override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getPokemon(name: String): Pokemon {
         TODO("Not yet implemented")
     }
 
     override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
         return database.pokemon().loadAllPokemon(limit, offset).map { it.toDomain() }
+    }
+
+    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
+        database.pokemon().delete()
+        database.pokemonType().delete()
+        database.move().delete()
+        database.ability().delete()
+        database.typeCross().delete()
+        database.moveCross().delete()
+        database.moveCross().delete()
+        database.abilityCross().delete()
+        return emptyList()
     }
 }
