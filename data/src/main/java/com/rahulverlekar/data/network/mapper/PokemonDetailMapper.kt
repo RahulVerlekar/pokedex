@@ -17,7 +17,7 @@ fun PokemonDetailResponse.toDomain(): Pokemon {
     return Pokemon(
         id,
         name,
-        sprites?.frontDefault ?: "",
+        sprites?.other?.officialArtwork?.frontDefault ?: "",
         abilities.map { it.abilityDTO.toDomain() },
         moves.map { it.moveDTO.toDomain() },
         types.map { it.type.toDomain() }

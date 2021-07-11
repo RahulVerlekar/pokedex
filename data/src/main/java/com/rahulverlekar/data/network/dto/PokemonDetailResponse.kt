@@ -641,10 +641,10 @@ data class TypesItem(
 data class Sprites(
 
 	@field:SerializedName("back_shiny_female")
-	val backShinyFemale: Any? = null,
+	val backShinyFemale: String? = null,
 
 	@field:SerializedName("back_female")
-	val backFemale: Any? = null,
+	val backFemale: String? = null,
 
 	@field:SerializedName("other")
 	val other: Other? = null,
@@ -653,7 +653,7 @@ data class Sprites(
 	val backDefault: String? = null,
 
 	@field:SerializedName("front_shiny_female")
-	val frontShinyFemale: Any? = null,
+	val frontShinyFemale: String? = null,
 
 	@field:SerializedName("front_default")
 	val frontDefault: String? = null,
@@ -662,7 +662,7 @@ data class Sprites(
 	val versions: Versions? = null,
 
 	@field:SerializedName("front_female")
-	val frontFemale: Any? = null,
+	val frontFemale: String? = null,
 
 	@field:SerializedName("back_shiny")
 	val backShiny: String? = null,

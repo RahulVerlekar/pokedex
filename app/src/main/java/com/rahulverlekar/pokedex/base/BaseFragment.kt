@@ -36,6 +36,7 @@ abstract class BaseFragment<out T : ViewDataBinding>(
     ): View? {
         toolbarTitle?.apply { setToolbarTitle(this) }
         attachBinding()
+        binding.executePendingBindings()
         initVMDependency()
         return binding.root
     }
