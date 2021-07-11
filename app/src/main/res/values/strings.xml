@@ -2,4 +2,8 @@
     <string name="app_name">PokeDex</string>
     <string name="ability">Ability</string>
     <string name="moves">Moves</string>
+    <string name="name">Name</string>
+    <string name="number">Number</string>
+    <string name="pokedex">Pokedex</string>
+    <string name="name_or_ability">Name or Ability</string>
 </resources>

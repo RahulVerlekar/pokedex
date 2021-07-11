@@ -9,11 +9,13 @@ import javax.inject.Inject
 
 interface PokeDexUseCases {
 
-    suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon>
+    suspend fun getPokemons(offset: Int, limit: Int, order: String): List<Pokemon>
 
     suspend fun getPokemon(name: String): Pokemon
 
-    suspend fun refreshList(offset: Int, limit: Int): List<Pokemon>
+    suspend fun refreshList(offset: Int, limit: Int, order: String): List<Pokemon>
+
+    suspend fun searchPokemon(search: String): List<Pokemon>
 }
 
 interface PokeDexRemoteUseCases: PokeDexUseCases {
@@ -39,7 +41,7 @@ class PokeDexUseCasesImpl @Inject constructor(
         return remote.getPokemon(name)
     }
 
-    override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
+    override suspend fun getPokemons(offset: Int, limit: Int, order: String): List<Pokemon> {
         return if (offset + limit > keyValueStorage.lastOffset + limit) {
             val names = remote.getPokemonNames(offset, limit)
             val pokemons = mutableListOf<Pokemon>()
@@ -51,13 +53,17 @@ class PokeDexUseCasesImpl @Inject constructor(
             keyValueStorage.lastOffset = offset
             pokemons
         } else {
-            local.getPokemons(offset, limit)
+            local.getPokemons(offset, limit, order)
         }
     }
 
-    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
-        local.refreshList(offset, limit)
+    override suspend fun refreshList(offset: Int, limit: Int, order: String): List<Pokemon> {
+        local.refreshList(offset, limit, order)
         keyValueStorage.deleteAll()
-        return getPokemons(offset, limit)
+        return getPokemons(offset, limit, order)
+    }
+
+    override suspend fun searchPokemon(search: String): List<Pokemon> {
+        return local.searchPokemon(search)
     }
 }
