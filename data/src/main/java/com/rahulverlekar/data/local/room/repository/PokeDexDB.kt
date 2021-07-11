@@ -18,7 +18,7 @@ class PokeDexDB @Inject constructor(
 ) : PokeDexLocalUseCases {
 
     override suspend fun addPokemon(vararg objects: Pokemon) {
-        val pokemons = objects.map { PokemonDB(it.id, it.name, it.image) }
+        val pokemons = objects.map { PokemonDB(it.id, it.name, it.description, it.image) }
         database.pokemon().insert(*pokemons.toTypedArray())
 
         val moves = objects.flatMap { it.moves }.distinctBy { it.id }.map { MoveDB(it.id, it.name) }

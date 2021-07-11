@@ -35,10 +35,17 @@ class PokemonListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.ivLoading.loadGif(R.raw.pika_loading)
+        binding.ivNoData.loadGifStretch(R.raw.ash_run)
         binding.rvPokemonList.loadMore { viewModel.loadMore() }
         binding.slPokemonList.setOnRefreshListener(this)
         viewModel.pokemons.observe(viewLifecycleOwner, {list ->
-            binding.rvPokemonList.addDataSource(list.withIndex().map { PokemonItem(it.value, requireContext(), it.index) }, R.layout.item_pokemon, this)
+            if(list.isEmpty()) {
+                binding.llNoData.visibility = View.VISIBLE
+            }
+            else {
+                binding.llNoData.visibility = View.GONE
+            }
+            binding.rvPokemonList.addDataSource(list.withIndex().map { PokemonItem(it.value, requireContext(), it.index) }, R.layout.item_pokemon_card, this)
         })
         viewModel.isBusy.observe(viewLifecycleOwner, {
             binding.rlLoadMore.visibility = if(it == true) View.VISIBLE else View.GONE
@@ -50,9 +57,11 @@ class PokemonListFragment :
             val view = (binding.rvPokemonList.findViewHolderForLayoutPosition(item.pos) as DataBindingVH).binding.root.findViewById<ImageView>(R.id.iv_pokemon)
             val tv = (binding.rvPokemonList.findViewHolderForLayoutPosition(item.pos) as DataBindingVH).binding.root.findViewById<TextView>(R.id.txt_name)
             val extra = FragmentNavigatorExtras(
+                view to item.image,
+                tv to item.name
             )
             // TODO: 11-07-2021 Work on animations
-            findNavController().navigate(PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(item.pokemon))
+            findNavController().navigate(PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(item.pokemon), extra)
         }
     }
 
