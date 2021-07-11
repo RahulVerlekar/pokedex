@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="com.rahulverlekar.pokedex.ui.home.PokemonListViewModel.OrderBy"/>
         <variable
             name="vm"
             type="com.rahulverlekar.pokedex.ui.home.PokemonListViewModel" />
@@ -13,6 +14,43 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pokedex"
+            android:layout_margin="@dimen/margin"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_search"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_baseline_search"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            android:layout_marginEnd="@dimen/margin"
+            android:padding="@dimen/marginHalf"
+            android:onClick="@{()->vm.searchClicked()}"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_type"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="@dimen/marginHalf"
+            android:src="@{vm.order == OrderBy.Number ? @drawable/ic_baseline_sort : @drawable/ic_baseline_sort_by_alpha}"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/iv_search"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            android:onClick="@{()->vm.typeClicked()}"/>
 
         <RelativeLayout
             android:id="@+id/rl_load_more"
@@ -36,11 +74,12 @@
             app:layout_constraintBottom_toTopOf="@id/rl_load_more"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/textView">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_pokemon_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

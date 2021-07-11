@@ -1,6 +1,5 @@
-package com.rahulverlekar.pokedex.ui.home
+package com.rahulverlekar.pokedex.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -9,22 +8,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.rahulverlekar.domain.model.Pokemon
 import com.rahulverlekar.pokedex.R
 import com.rahulverlekar.pokedex.base.BaseFragment
 import com.rahulverlekar.pokedex.base.BaseViewModel
 import com.rahulverlekar.pokedex.common.*
-import com.rahulverlekar.pokedex.databinding.FragmentPokemonListBinding
-import com.rahulverlekar.pokedex.ui.PokemonViewRes
+import com.rahulverlekar.pokedex.databinding.FragmentPokemonSearchBinding
+import com.rahulverlekar.pokedex.ui.home.PokemonItem
 import com.rahulverlekar.pokedex.utils.BaseEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PokemonListFragment :
-    BaseFragment<FragmentPokemonListBinding>(R.layout.fragment_pokemon_list), RecyclerViewCallback,
-    SwipeRefreshLayout.OnRefreshListener {
+class PokemonSearchFragment :
+    BaseFragment<FragmentPokemonSearchBinding>(R.layout.fragment_pokemon_search), RecyclerViewCallback {
 
-    val viewModel: PokemonListViewModel by viewModels()
+    val viewModel: PokemonSearchViewModel by viewModels()
 
     override fun getVM(): BaseViewModel = viewModel
 
@@ -34,14 +31,8 @@ class PokemonListFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ivLoading.loadGif(R.raw.pika_loading)
-        binding.rvPokemonList.loadMore { viewModel.loadMore() }
-        binding.slPokemonList.setOnRefreshListener(this)
         viewModel.pokemons.observe(viewLifecycleOwner, {list ->
             binding.rvPokemonList.addDataSource(list.withIndex().map { PokemonItem(it.value, requireContext(), it.index) }, R.layout.item_pokemon, this)
-        })
-        viewModel.isBusy.observe(viewLifecycleOwner, {
-            binding.rlLoadMore.visibility = if(it == true) View.VISIBLE else View.GONE
         })
     }
 
@@ -52,35 +43,11 @@ class PokemonListFragment :
             val extra = FragmentNavigatorExtras(
             )
             // TODO: 11-07-2021 Work on animations
-            findNavController().navigate(PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(item.pokemon))
+            findNavController().navigate(PokemonSearchFragmentDirections.actionPokemonSearchFragmentToPokemonDetailFragment(item.pokemon))
         }
     }
 
     override fun handleEvent(event: BaseEvent) {
         super.handleEvent(event)
-        if (event is PokemonListViewModel.RefreshCompleteEvent) {
-            binding.slPokemonList.isRefreshing = false
-        }
-        if (event is PokemonListViewModel.OpenSearchPageEvent) {
-            findNavController().navigate(PokemonListFragmentDirections.actionPokemonListFragmentToPokemonSearchFragment())
-        }
     }
-
-    override fun onRefresh() {
-        viewModel.onRefresh()
-    }
-}
-
-data class PokemonItem(override val pokemon: Pokemon, override val ctx: Context, val pos: Int) : PokemonViewRes(pokemon, ctx), ListItem {
-    val name: String
-        get() = pokemon.name
-
-    val image: String
-        get() = pokemon.image
-
-    val typeOne: String
-        get() = pokemon.types[0].name
-
-    val typeTwo: String
-        get() = pokemon.types[1].name
 }

@@ -36,12 +36,16 @@ class PokeDexNetworkRepo @Inject constructor(
         return api.getPokemon(name).toDomain()
     }
 
-    override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
+    override suspend fun getPokemons(offset: Int, limit: Int, order: String): List<Pokemon> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
-        return getPokemons(offset, limit)
+    override suspend fun refreshList(offset: Int, limit: Int, order: String): List<Pokemon> {
+        return getPokemons(offset, limit, order)
+    }
+
+    override suspend fun searchPokemon(search: String): List<Pokemon> {
+        TODO("Not yet implemented")
     }
 }
 

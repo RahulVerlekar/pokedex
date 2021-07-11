@@ -56,11 +56,19 @@ class PokeDexDB @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
-        return database.pokemon().loadAllPokemon(limit, offset).map { it.toDomain() }
+    override suspend fun getPokemons(offset: Int, limit: Int, order: String): List<Pokemon> {
+        return if (order == "name") {
+            database.pokemon().loadAllPokemonByName(limit, offset).map { it.toDomain() }
+        } else {
+            database.pokemon().loadAllPokemonByNumber(limit, offset).map { it.toDomain() }
+        }
     }
 
-    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
+    override suspend fun searchPokemon(search: String): List<Pokemon> {
+        return database.pokemon().searchPokemon(search).map { it.toDomain() }
+    }
+
+    override suspend fun refreshList(offset: Int, limit: Int, order: String): List<Pokemon> {
         database.pokemon().delete()
         database.pokemonType().delete()
         database.move().delete()

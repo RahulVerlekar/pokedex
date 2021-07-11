@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_pokemonListFragment_to_pokemonDetailFragment"
             app:destination="@id/pokemonDetailFragment" />
+        <action
+            android:id="@+id/action_pokemonListFragment_to_pokemonSearchFragment"
+            app:destination="@id/pokemonSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/pokemonDetailFragment"
@@ -18,5 +21,13 @@
         <argument
             android:name="pokemon"
             app:argType="com.rahulverlekar.domain.model.Pokemon" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonSearchFragment"
+        android:name="com.rahulverlekar.pokedex.ui.search.PokemonSearchFragment"
+        android:label="PokemonSearchFragment" >
+        <action
+            android:id="@+id/action_pokemonSearchFragment_to_pokemonDetailFragment"
+            app:destination="@id/pokemonDetailFragment" />
     </fragment>
 </navigation>
