@@ -146,7 +146,8 @@ fun AppCompatImageView.bindGlideSrc(
     ).into(this)
 }
 
-fun ImageView.loadGif(@RawRes glideGif: Int) {
+@BindingAdapter("gif")
+fun AppCompatImageView.loadGif(@RawRes glideGif: Int) {
     Glide.with(context)
         .load(glideGif)
         .into(this)

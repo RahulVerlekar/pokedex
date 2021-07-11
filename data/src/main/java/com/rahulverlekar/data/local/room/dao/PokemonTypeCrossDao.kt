@@ -14,6 +14,9 @@ interface PokemonTypeCrossDao {
     @Delete
     suspend fun delete(vararg obj: PokemonTypeCrossRefDB)
 
+    @Query("DELETE FROM pokemontypecrossrefdb")
+    suspend fun delete()
+
     @Query("SELECT * from pokemontypecrossrefdb WHERE pokemonId = :pokemonId")
     suspend fun loadAll(pokemonId: String): List<PokemonTypeCrossRefDB>
 }

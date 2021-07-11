@@ -112,6 +112,12 @@ fun <E : ListItem> RecyclerView.addDataSource(
     callback: RecyclerViewCallback?,
     @RecyclerView.Orientation orientation: Int = RecyclerView.VERTICAL
 ): LinearLayoutAdapter<E> {
+    adapter?.let {
+        val oldAdapter:LinearLayoutAdapter<ListItem> = adapter as LinearLayoutAdapter<ListItem>
+        oldAdapter.dataSource = dataSource
+        oldAdapter.notifyDataSetChanged()
+        return oldAdapter as LinearLayoutAdapter<E>
+    }
     val adapter = LinearLayoutAdapter<E>(layoutId)
     adapter.callback = callback
     adapter.dataSource = dataSource

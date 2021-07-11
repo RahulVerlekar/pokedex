@@ -14,6 +14,9 @@ interface AbilityDao {
     @Delete
     suspend fun delete(vararg obj: AbilityDB)
 
+    @Query("DELETE FROM ability")
+    suspend fun delete()
+
     @Query("SELECT * FROM ability WHERE id = :id")
     suspend fun load(id: Int): AbilityDB
 

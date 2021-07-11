@@ -13,11 +13,12 @@ import javax.inject.Inject
 class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseCases) :
     BaseViewModel() {
 
+    private val limit = 10
     val pokemons = MutableLiveData<List<Pokemon>>()
 
     init {
         launch {
-            val data = useCases.getPokemons(0, 10)
+            val data = useCases.getPokemons(0, limit)
             pokemons.value = data
             println(data)
         }
@@ -25,11 +26,18 @@ class PokemonListViewModel @Inject constructor(private val useCases: PokeDexUseC
 
     fun loadMore() {
         launch {
-            val data = useCases.getPokemons(pokemons.value?.size ?: 0, 10)
+            val data = useCases.getPokemons(pokemons.value?.size ?: 0, limit)
             val newData = pokemons.value?.plus(data)
             newData?.let {
                 pokemons.value = it
             }
+        }
+    }
+
+    fun onRefresh() {
+        launch {
+            val data = useCases.refreshList(0,limit)
+            pokemons.value = data
         }
     }
 

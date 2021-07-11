@@ -9,27 +9,31 @@ import javax.inject.Inject
 
 interface PokeDexUseCases {
 
-    suspend fun addPokemon(vararg pokemon: Pokemon)
-
-    suspend fun getPokemonNames(offset: Int, limit: Int = 20): List<String>
+    suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon>
 
     suspend fun getPokemon(name: String): Pokemon
 
-    suspend fun getPokemons(offset: Int, limit: Int = 20): List<Pokemon>
+    suspend fun refreshList(offset: Int, limit: Int): List<Pokemon>
+}
+
+interface PokeDexRemoteUseCases: PokeDexUseCases {
+
+    suspend fun getPokemonNames(offset: Int, limit: Int): List<String>
+}
+
+interface PokeDexLocalUseCases: PokeDexUseCases {
+
+    suspend fun addPokemon(vararg pokemon: Pokemon)
+
 }
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class PokeDexUseCasesImpl @Inject constructor(
-    private val remote: PokeDexUseCases,
-    private val local: PokeDexUseCases,
+    private val remote: PokeDexRemoteUseCases,
+    private val local: PokeDexLocalUseCases,
     private val keyValueStorage: KeyValueStorage
 ) : PokeDexUseCases {
-
-
-    override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
-        return remote.getPokemonNames(offset, limit)
-    }
 
     override suspend fun getPokemon(name: String): Pokemon {
         return remote.getPokemon(name)
@@ -51,7 +55,9 @@ class PokeDexUseCasesImpl @Inject constructor(
         }
     }
 
-    override suspend fun addPokemon(vararg pokemon: Pokemon) {
-        return local.addPokemon(*pokemon)
+    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
+        local.refreshList(offset, limit)
+        keyValueStorage.deleteAll()
+        return getPokemons(offset, limit)
     }
 }

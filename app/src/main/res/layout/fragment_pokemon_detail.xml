@@ -7,9 +7,19 @@
 
         <import type="android.view.View" />
 
+        <import type="com.rahulverlekar.pokedex.ui.detail.PokemonDetailFragment.ActiveTab" />
+
         <variable
             name="item"
             type="com.rahulverlekar.pokedex.ui.PokemonViewRes" />
+
+        <variable
+            name="vm"
+            type="com.rahulverlekar.pokedex.ui.detail.PokemonDetailViewModel" />
+
+        <variable
+            name="handler"
+            type="com.rahulverlekar.pokedex.ui.detail.PokemonDetailFragment" />
 
     </data>
 
@@ -20,7 +30,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_data"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="100dp"
             android:background="@drawable/top_rounded_shape"
@@ -80,14 +90,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_name"
                 app:src="@{item.typeTwoTag??@drawable/fire_tag}" />
 
-            <LinearLayout
+            <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/marginHalf"
-                android:orientation="horizontal"
                 android:paddingStart="@dimen/margin"
-                android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_name_description"
@@ -95,38 +103,41 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chp_report"
-                    android:layout_width="match_parent"
+                    android:id="@+id/chp_ability"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin"
-                    android:layout_weight="1"
                     android:checkable="true"
+                    android:checked="@{handler.activeTab == ActiveTab.Ability}"
+                    android:onClick="@{()->handler.onAbilitySelected()}"
                     android:text="@string/ability"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     app:checkedIconEnabled="false"
-                    app:chipBackgroundColor="@color/purple_700" />
+                    app:chipBackgroundColor="@{item.typeOneColor}" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chp_bill"
-                    android:layout_width="match_parent"
+                    android:id="@+id/chp_move"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin"
-                    android:layout_weight="1"
                     android:checkable="true"
+                    android:checked="@{handler.activeTab == ActiveTab.Moves}"
+                    android:onClick="@{()->handler.onMoveSelected()}"
                     android:text="@string/moves"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     app:checkedIconEnabled="false"
-                    app:chipBackgroundColor="@color/purple_700" />
+                    app:chipBackgroundColor="@{item.typeOneColor}" />
 
-            </LinearLayout>
+            </com.google.android.material.chip.ChipGroup>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ability"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/marginHalf"
+                android:visibility="@{handler.activeTab == ActiveTab.Ability ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,6 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/marginHalf"
+                android:visibility="@{handler.activeTab == ActiveTab.Moves ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -150,12 +162,12 @@
             android:layout_height="150dp"
             android:layout_marginTop="@dimen/margin"
             android:elevation="@dimen/margin"
+            android:transitionName="@{item.pokemon.image}"
             app:glideSrc="@{item.pokemon.image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            android:transitionName="@{item.pokemon.image}"/>
+            tools:srcCompat="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

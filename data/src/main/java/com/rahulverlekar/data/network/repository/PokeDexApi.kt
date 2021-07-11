@@ -7,6 +7,7 @@ import com.rahulverlekar.data.network.dto.PokemonNamedResourceDTO
 import com.rahulverlekar.data.network.mapper.toDomain
 import com.rahulverlekar.domain.KeyValueStorage
 import com.rahulverlekar.domain.model.Pokemon
+import com.rahulverlekar.domain.usecase.PokeDexRemoteUseCases
 import com.rahulverlekar.domain.usecase.PokeDexUseCases
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,14 +22,10 @@ import javax.inject.Inject
 class PokeDexNetworkRepo @Inject constructor(
     client: RetrofitClient,
     private val keyValueStorage: KeyValueStorage
-) : PokeDexUseCases {
+) : PokeDexRemoteUseCases {
 
     private val api: PokeDexApi by lazy {
         client.build().create(PokeDexApi::class.java)
-    }
-
-    override suspend fun addPokemon(vararg pokemon: Pokemon) {
-        TODO("Not yet implemented")
     }
 
     override suspend fun getPokemonNames(offset: Int, limit: Int): List<String> {
@@ -41,6 +38,10 @@ class PokeDexNetworkRepo @Inject constructor(
 
     override suspend fun getPokemons(offset: Int, limit: Int): List<Pokemon> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun refreshList(offset: Int, limit: Int): List<Pokemon> {
+        return getPokemons(offset, limit)
     }
 }
 
