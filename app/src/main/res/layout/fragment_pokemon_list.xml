@@ -91,8 +91,9 @@
                 android:layout_marginEnd="@dimen/margindouble"
                 android:layout_marginTop="@dimen/margindouble"
                 app:cardCornerRadius="@dimen/margindouble"
-                android:clipToPadding="true"
+                android:clipToPadding="false"
                 android:clipChildren="true"
+                app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true">
 
                 <androidx.appcompat.widget.AppCompatImageView
